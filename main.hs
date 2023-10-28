@@ -9,7 +9,6 @@ import Distribution.Simple.Setup (falseArg, trueArg)
 import Distribution.Simple.Utils (xargs)
 -- Part A
 char_to_int :: Char -> Integer
---char_to_int = error "Not implemented"
 char_to_int '0'= 0
 char_to_int '1'= 1
 char_to_int '2'= 2
@@ -21,18 +20,18 @@ char_to_int '7'= 7
 char_to_int '8'= 8
 char_to_int '9'= 9
 char_to_int _ = error "Invalid input."
+
 repeat_char :: Char -> Integer -> String
---repeat_char = error "Not implemented"
-repeat_char _ 0 = ""
-repeat_char c n = c : repeat_char c (n-1)
+repeat_char c n 
+            | n <= 0 = ""
+            | otherwise = c : repeat_char c (n-1)
+
 decode :: String -> String
---decode = error "Not implemented"
 decode [] = ""
 decode (x:y:xs) = repeat_char x (char_to_int y) ++ decode xs
 decode (_:_) = error "Invalid input."
 -- Part B                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
-int_to_char :: Integer -> Char
---int_to_char = error "Not implemented"
+int_to_char :: Integer -> Char   
 int_to_char 0 = '0'
 int_to_char 1 = '1'
 int_to_char 2 = '2'
@@ -44,22 +43,20 @@ int_to_char 7 = '7'
 int_to_char 8 = '8'
 int_to_char 9 = '9'
 int_to_char _ = error "Invalid input."
+
 length_char :: Char -> String -> Integer
---length_char = error "Not implemented"
 length_char _ [] = 0
 length_char c (x:xs) = if c == x then
                         1 + length_char c xs
                        else
                         0
 drop_char :: Char -> String -> String
---drop_char = error "Not implemented"
 drop_char _ [] = []
 drop_char c (x:xs) = if c == x then
                         drop_char c xs
                      else
                         x:xs
 encode :: String -> String
---encode = error "Not implemented"
 encode [] = []
 encode (x:xs) = let length = length_char x xs + 1
                 in x : int_to_char length : encode (drop_char x xs)
@@ -77,7 +74,7 @@ intToChar x
     | x == 7 = ['7']
     | x == 8 = ['8']
     | x == 9 = ['9']
-    | x > 9 = (intToChar (x `div` 10)  ++ intToChar (mod x 10 ) )
+    | x > 9 = (intToChar (div x 10)  ++ intToChar (mod x 10 ) )
 
 elem' :: Char -> String -> Bool
 elem' e [] = False
@@ -128,7 +125,6 @@ stringToInt :: String -> Integer
 stringToInt str = stringToIntHelper str 0
 
 complex_encode :: String -> String
---complex_encode = error "Not implemented"
 complex_encode [] = []
 complex_encode [x] = [x] ++ "1"
 complex_encode (x:xs) = if length_char x xs == 0 
