@@ -95,6 +95,7 @@ drop' n (x:xs) = drop' (n-1) xs
 isNumber :: Char -> Bool
 isNumber x = elem' x "0123456789"
 
+extractNumberHelper :: [Char] -> [Char] -> [Char]
 extractNumberHelper [] y = y
 extractNumberHelper (x:xs) y
                   | isNumber x = extractNumberHelper xs (y ++ [x])
@@ -117,10 +118,11 @@ convertInteger '8' = 8
 convertInteger '9' = 9
 convertInteger _   = error "Invalid"
 
+stringToIntHelper :: [Char] -> Integer -> Integer
 stringToIntHelper [] y = y
 stringToIntHelper (x:xs) y
                   | isNumber x = stringToIntHelper xs (y * 10 + convertInteger x)
-                  | otherwise = error "test"
+                  | otherwise = error "Invalid"
 
 stringToInt :: String -> Integer
 stringToInt str = stringToIntHelper str 0
@@ -128,6 +130,7 @@ stringToInt str = stringToIntHelper str 0
 complex_encode :: String -> String
 --complex_encode = error "Not implemented"
 complex_encode [] = []
+complex_encode [x] = [x] ++ "1"
 complex_encode (x:xs) = if length_char x xs == 0 
                         then x : complex_encode (drop_char x xs) 
                         else let length = length_char x xs + 1 in x : intToChar length ++ complex_encode (drop_char x xs)
